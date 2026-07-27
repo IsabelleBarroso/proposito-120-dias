@@ -75,7 +75,14 @@
   .cell.done{background:var(--acc);border-color:var(--acc);color:#0e1116;font-weight:700}
   .cell.today{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--acc)}
 
-  .wsel{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;margin-top:4px;-webkit-overflow-scrolling:touch}
+  .datebar{background:var(--card);border-radius:16px;padding:14px 16px;margin-top:4px;border:1px solid var(--line)}
+  .datebar-lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:8px}
+  .datebar-row{display:flex;gap:10px}
+  .datebar-row input{flex:1;padding:11px;border-radius:11px;border:1.5px solid var(--line);background:var(--card2);color:var(--txt);font-size:15px;font-weight:600}
+  .datebar-row input:focus{outline:none;border-color:var(--gym)}
+  .datebar-row button{padding:11px 16px;border-radius:11px;border:1.5px solid var(--gym);background:transparent;color:var(--gym);font-size:14px;font-weight:700;cursor:pointer}
+  .datebar-hint{font-size:12px;color:var(--run);margin-top:8px;font-weight:600}
+  .wsel{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;margin-top:12px;-webkit-overflow-scrolling:touch}
   .wsel button{flex:0 0 auto;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--mut);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
   .wsel button.active{background:var(--gym);border-color:var(--gym);color:#fff}
 
@@ -102,6 +109,22 @@
   .ex .exmeta{font-size:12px;color:var(--mut);margin-top:2px}
   .ex.cardio .exname{color:var(--run)}
   .doneall{width:100%;margin-top:16px;padding:15px;border-radius:14px;border:none;background:var(--gym);color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+  .clearday{width:100%;margin-top:10px;padding:13px;border-radius:14px;border:1.5px solid var(--line);background:transparent;color:var(--run);font-size:14px;font-weight:700;cursor:pointer}
+  .clearday:active{transform:scale(.98)}
+  .addpast{width:100%;margin-top:22px;padding:13px;border-radius:14px;border:1.5px dashed var(--line);background:transparent;color:var(--mut);font-size:14px;font-weight:700;cursor:pointer}
+  .addpast:active{transform:scale(.98)}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px}
+  .modal{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;width:100%;max-width:400px}
+  .modal-title{font-size:18px;font-weight:800;margin-bottom:18px}
+  .modal-field{margin-bottom:14px}
+  .modal-field label{display:block;font-size:12px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+  .modal-field input,.modal-field select{width:100%;padding:13px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);color:var(--txt);font-size:16px;font-weight:600}
+  .modal-field input:focus,.modal-field select:focus{outline:none;border-color:var(--gym)}
+  .modal-btns{display:flex;gap:10px;margin-top:22px}
+  .modal-btns button{flex:1;padding:14px;border-radius:12px;border:none;font-size:15px;font-weight:800;cursor:pointer}
+  .modal-cancel{background:var(--card2);color:var(--txt);border:1.5px solid var(--line)!important}
+  .modal-save{background:var(--gym);color:#fff}
 
   .cardio-panel{margin-top:14px}
   .ctipos{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
@@ -144,11 +167,19 @@
   .cday.today{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--gym)}
   .cday .mins{font-size:8px;opacity:.85;margin-top:1px}
   .cal-help{text-align:center;font-size:12px;color:var(--mut);margin-top:12px;line-height:1.5}
-  .yeargrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
-  .ymonth{background:var(--card);border-radius:14px;padding:14px 6px;text-align:center;border:1px solid var(--line)}
-  .ymonth .ym{font-size:11px;color:var(--mut);font-weight:700;text-transform:uppercase;margin-bottom:6px}
-  .ymonth .yc{font-size:22px;font-weight:800;color:var(--gym)}
-  .ymonth .yl{font-size:10px;color:var(--mut);margin-top:2px}
+  .yeargrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:4px}
+  .ymonth{background:var(--card);border-radius:14px;padding:12px 10px;border:1px solid var(--line);cursor:pointer}
+  .ymonth.cur{border-color:var(--gym)}
+  .ymonth .ymhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .ymonth .ym{font-size:12px;color:var(--txt);font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+  .ymonth .yc{font-size:12px;color:var(--gym);font-weight:800}
+  .minical-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px}
+  .minical-dow div{text-align:center;font-size:7px;font-weight:700;color:var(--mut);text-transform:uppercase}
+  .minical{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .minical .mc{aspect-ratio:1;border-radius:3px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--mut);line-height:1}
+  .minical .mc.empty{background:transparent;color:transparent}
+  .minical .mc.on{background:var(--gym);color:#fff}
+  .minical .mc.today{outline:1.5px solid var(--acc);outline-offset:-1px}
   .yeartotal{text-align:center;margin-top:16px;font-size:14px;color:var(--mut)}
   .yeartotal b{color:var(--gym);font-size:20px}
 
@@ -238,6 +269,31 @@
     <div class="clog" id="clog"></div>
   </div>
   <button class="doneall" id="doneAll">Marcar treino do dia como feito</button>
+  <button class="clearday" id="clearDay">Zerar treino de hoje</button>
+
+  <button class="addpast" id="addPast">+ Registrar treino de outro dia</button>
+</div>
+
+<div class="modal-bg hidden" id="pastModal">
+  <div class="modal">
+    <div class="modal-title">Registrar treino anterior</div>
+    <div class="modal-field">
+      <label>Data</label>
+      <input type="date" id="pastDate">
+    </div>
+    <div class="modal-field">
+      <label>Treino</label>
+      <select id="pastWorkout"></select>
+    </div>
+    <div class="modal-field">
+      <label>Duração (minutos)</label>
+      <input type="number" id="pastMin" inputmode="numeric" placeholder="ex: 45">
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" id="pastCancel">Cancelar</button>
+      <button class="modal-save" id="pastSave">Salvar</button>
+    </div>
+  </div>
 </div>
 
 <div class="wrap hidden" id="viewFreq">
@@ -252,17 +308,7 @@
     <div class="week-goal" id="weekGoal"></div>
   </div>
   <div class="card">
-    <div class="monthnav">
-      <button id="prevM">&lsaquo;</button>
-      <div class="mtitle" id="mTitle">—</div>
-      <button id="nextM">&rsaquo;</button>
-    </div>
-    <div class="caldow"><div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div></div>
-    <div class="calgrid" id="calgrid"></div>
-    <div class="cal-help">Toque num dia pra marcar/desmarcar treino.<br>Num dia já marcado, toque de novo pra editar os minutos.</div>
-  </div>
-  <div class="card">
-    <div class="lbl">Ano de 2026</div>
+    <div class="lbl">Ano de 2026 — toque num mês pra ampliar</div>
     <div class="yeargrid" id="yeargrid"></div>
     <div class="yeartotal">Total no ano: <b id="yTotal">0</b> treinos</div>
   </div>
@@ -402,11 +448,13 @@ let gym={};
 let exState={};
 let cardioState={};    // cardioState[YYYY-MM-DD] = {tipo, sessions:[{tipo,min,km}]}
 let curCardioTipo="Esteira";
+let activeDate=null; // data ativa da aba Treinos (null = hoje)
 let curWorkout=0;
 let calMonth=6;
 let tickHandle=null;
 
 function todayStr(){return new Date().toISOString().slice(0,10);}
+function wDate(){return activeDate||todayStr();}
 function dstr(d){return d.toISOString().slice(0,10);}
 function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
 
@@ -512,7 +560,7 @@ function buildWorkoutSelector(){
 }
 function isCardioWorkout(){return !!WORKOUTS[curWorkout].isCardio;}
 function exToday(){
-  const t=todayStr();if(!exState[t])exState[t]={};
+  const t=wDate();if(!exState[t])exState[t]={};
   const w=WORKOUTS[curWorkout];
   if(w.isCardio){
     if(!exState[t][w.id])exState[t][w.id]={timer:{start:null,elapsed:0,running:false}};
@@ -521,12 +569,13 @@ function exToday(){
   if(!exState[t][w.id])exState[t][w.id]={done:w.ex.map(()=>false),timer:{start:null,elapsed:0,running:false}};
   return exState[t][w.id];
 }
-function cardioToday(){const t=todayStr();if(!cardioState[t])cardioState[t]={sessions:[]};return cardioState[t];}
+function cardioToday(){const t=wDate();if(!cardioState[t])cardioState[t]={sessions:[]};return cardioState[t];}
 function fmt(ms){const s=Math.floor(ms/1000);const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;
   return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0");}
 
 function renderWorkout(){
   const st=exToday();const w=WORKOUTS[curWorkout];const cardio=w.isCardio;
+  const isToday=true;
   updateClock();
   const startB=document.getElementById("startBtn"),stopB=document.getElementById("stopBtn");
   if(st.timer.running){startB.classList.add("hidden");stopB.classList.remove("hidden");}
@@ -535,7 +584,7 @@ function renderWorkout(){
   const ts=document.getElementById("tsaved");
   if(st.timer.running){ts.classList.add("empty");ts.textContent=cardio?("Cronometrando "+curCardioTipo+"…"):"Cronometrando…";}
   else if(st.timer.elapsed>0){ts.classList.remove("empty");ts.textContent="⏱ Duração: "+fmt(st.timer.elapsed)+(cardio?" · digite os km e finalize":"");}
-  else{ts.classList.add("empty");ts.textContent=cardio?"Escolha o tipo e inicie o cardio":"Nenhum treino cronometrado hoje";}
+  else{ts.classList.add("empty");ts.textContent=cardio?"Escolha o tipo e inicie o cardio":(isToday?"Nenhum treino cronometrado hoje":"Nenhum treino cronometrado neste dia");}
 
   const list=document.getElementById("exlist");
   const panel=document.getElementById("cardioPanel");
@@ -602,12 +651,12 @@ function stopTimer(){
     saveEx();saveCardio();renderWorkout();renderFreq();renderStart();
     return;
   }
-  gym[todayStr()]={done:true,min:mins};
+  gym[wDate()]={done:true,min:mins};
   saveEx();saveGym();renderWorkout();renderFreq();renderStart();
 }
 /* soma os minutos de cardio do dia e marca presença */
 function recalcCardioDay(){
-  const t=todayStr();const cd=cardioState[t];
+  const t=wDate();const cd=cardioState[t];
   if(cd&&cd.sessions.length>0){
     const totalMin=cd.sessions.reduce((a,s)=>a+(s.min||0),0);
     const prev=gym[t]||{};
@@ -631,25 +680,24 @@ function renderFreq(){
     el.innerHTML='<div class="dn">'+DN[i]+'</div><div class="dot'+(on?" on":"")+(dstr(d)===todayStr()?" today":"")+'">'+d.getDate()+'</div>';
     ws.appendChild(el);});
   document.getElementById("weekGoal").innerHTML="<b>"+wc+"</b> de "+WEEK_GOAL+" treinos esta semana";
-  renderCalendar();
   const yg=document.getElementById("yeargrid");yg.innerHTML="";
-  for(let m=0;m<12;m++){const c=countGymInMonth(m);const el=document.createElement("div");el.className="ymonth";
-    el.innerHTML='<div class="ym">'+MES_ABR[m]+'</div><div class="yc">'+c+'</div><div class="yl">treinos</div>';yg.appendChild(el);}
-  document.getElementById("yTotal").textContent=countGymInYear();
-}
-function renderCalendar(){
-  document.getElementById("mTitle").textContent=MESES[calMonth]+" "+YEAR;
-  const startDow=new Date(YEAR,calMonth,1).getDay();
-  const daysIn=new Date(YEAR,calMonth+1,0).getDate();
-  const g=document.getElementById("calgrid");g.innerHTML="";
-  for(let i=0;i<startDow;i++){const e=document.createElement("div");e.className="cday empty";g.appendChild(e);}
-  for(let d=1;d<=daysIn;d++){
-    const ds=YEAR+"-"+String(calMonth+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
-    const rec=gym[ds];const on=rec&&rec.done;
-    const e=document.createElement("div");e.className="cday"+(on?" on":"")+(ds===todayStr()?" today":"");
-    e.innerHTML=d+(on&&rec.min?'<div class="mins">'+rec.min+'m</div>':"");
-    e.addEventListener("click",()=>toggleGym(ds));g.appendChild(e);
+  for(let m=0;m<12;m++){
+    const c=countGymInMonth(m);
+    const el=document.createElement("div");el.className="ymonth";
+    let mini='<div class="minical-dow"><div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div></div><div class="minical">';
+    const startDow=new Date(YEAR,m,1).getDay();
+    const daysIn=new Date(YEAR,m+1,0).getDate();
+    for(let i=0;i<startDow;i++)mini+='<div class="mc empty"></div>';
+    for(let d=1;d<=daysIn;d++){
+      const ds=YEAR+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+      const on=gym[ds]&&gym[ds].done;
+      mini+='<div class="mc'+(on?" on":"")+(ds===todayStr()?" today":"")+'">'+d+'</div>';
+    }
+    mini+='</div>';
+    el.innerHTML='<div class="ymhead"><span class="ym">'+MES_ABR[m]+'</span><span class="yc">'+c+'</span></div>'+mini;
+    yg.appendChild(el);
   }
+  document.getElementById("yTotal").textContent=countGymInYear();
 }
 function toggleGym(ds){
   const rec=gym[ds];
@@ -671,9 +719,59 @@ document.getElementById("waterAdd").addEventListener("click",()=>{const td=today
 document.getElementById("waterSub1").addEventListener("click",()=>{const td=todayProp();if(td.water>0)td.water--;renderWater(td.water);saveProp();});
 document.getElementById("startBtn").addEventListener("click",startTimer);
 document.getElementById("stopBtn").addEventListener("click",stopTimer);
-document.getElementById("doneAll").addEventListener("click",()=>{const st=exToday();st.done=st.done.map(()=>true);const t=todayStr();if(!gym[t]||!gym[t].done)gym[t]={done:true,min:(gym[t]&&gym[t].min)||null};saveEx();saveGym();renderWorkout();renderFreq();renderStart();});
-document.getElementById("prevM").addEventListener("click",()=>{if(calMonth>0){calMonth--;renderCalendar();}});
-document.getElementById("nextM").addEventListener("click",()=>{if(calMonth<11){calMonth++;renderCalendar();}});
+document.getElementById("doneAll").addEventListener("click",()=>{const st=exToday();st.done=st.done.map(()=>true);const t=wDate();if(!gym[t]||!gym[t].done)gym[t]={done:true,min:(gym[t]&&gym[t].min)||null};saveEx();saveGym();renderWorkout();renderFreq();renderStart();});
+document.getElementById("clearDay").addEventListener("click",()=>{
+  const w=WORKOUTS[curWorkout];const t=wDate();
+  const quando=(t===todayStr())?"de hoje":"de "+t.split("-").reverse().join("/");
+  const nome=w.isCardio?"o cardio ":"o treino ";
+  if(!confirm("Zerar "+nome+quando+"? Isso desmarca os exercícios, o cronômetro e a presença do dia.\n(O histórico de outros dias não é afetado.)"))return;
+  if(tickHandle){clearInterval(tickHandle);tickHandle=null;}
+  if(w.isCardio){
+    if(cardioState[t])cardioState[t]={sessions:[]};
+    if(exState[t]&&exState[t][w.id])exState[t][w.id]={timer:{start:null,elapsed:0,running:false}};
+    delete gym[t];
+    saveCardio();
+  }else{
+    if(exState[t]&&exState[t][w.id])exState[t][w.id]={done:w.ex.map(()=>false),timer:{start:null,elapsed:0,running:false}};
+    delete gym[t];
+  }
+  saveEx();saveGym();renderWorkout();renderFreq();renderStart();
+});
+// seletor de data
+// ===== Modal registrar treino anterior =====
+function openPastModal(){
+  const sel=document.getElementById("pastWorkout");sel.innerHTML="";
+  WORKOUTS.forEach((w,i)=>{const o=document.createElement("option");o.value=i;o.textContent=w.nome;sel.appendChild(o);});
+  document.getElementById("pastDate").value=todayStr();
+  document.getElementById("pastMin").value="";
+  document.getElementById("pastModal").classList.remove("hidden");
+}
+function closePastModal(){document.getElementById("pastModal").classList.add("hidden");}
+document.getElementById("addPast").addEventListener("click",openPastModal);
+document.getElementById("pastCancel").addEventListener("click",closePastModal);
+document.getElementById("pastModal").addEventListener("click",e=>{if(e.target.id==="pastModal")closePastModal();});
+document.getElementById("pastSave").addEventListener("click",()=>{
+  const ds=document.getElementById("pastDate").value;
+  const wi=Number(document.getElementById("pastWorkout").value);
+  const minV=document.getElementById("pastMin").value;
+  if(!ds){alert("Escolha a data.");return;}
+  if(!minV||Number(minV)<=0){alert("Digite a duração em minutos.");return;}
+  const w=WORKOUTS[wi];
+  gym[ds]={done:true,min:Number(minV)};
+  // marca também os exercícios do treino escolhido como feitos naquele dia (registro histórico)
+  if(!exState[ds])exState[ds]={};
+  if(w.isCardio){
+    if(!cardioState[ds])cardioState[ds]={sessions:[]};
+    cardioState[ds].sessions.push({tipo:"Registro retroativo",min:Number(minV),km:null});
+    saveCardio();
+  }else{
+    exState[ds][w.id]={done:w.ex.map(()=>true),timer:{start:null,elapsed:Number(minV)*60000,running:false}};
+    saveEx();
+  }
+  saveGym();renderFreq();renderStart();closePastModal();
+  alert("Treino de "+ds.split("-").reverse().join("/")+" registrado ("+minV+" min).");
+});
+
 document.getElementById("resetProp").addEventListener("click",()=>{if(confirm("Zerar dados do propósito? (treinos e frequência são mantidos)")){prop={startDate:null,days:{}};renderStart();saveProp();}});
 
 document.getElementById("navStart").addEventListener("click",()=>switchView("start"));
