@@ -8,11 +8,11 @@
 <title>Propósito 120 dias — Isabelle</title>
 <style>
   :root{
-    --bg:#0e1116;--card:#171b22;--card2:#1e232c;--line:#2a303b;
-    --txt:#eef2f7;--mut:#8b95a5;--ring:#2a303b;
-    --acc:#e6b450;--acc-soft:#3a3320;
-    --gym:#7f77dd;--gym-soft:#26215c;
-    --ok:#5ec98a;--water:#4bb5e8;--run:#e0774f;
+    --bg:#f6f4fc;--card:#ffffff;--card2:#f0ecfa;--line:#e3ddf3;
+    --txt:#2a2340;--mut:#8b83a8;--ring:#e3ddf3;
+    --acc:#8b5cf6;--acc-soft:#efe9fd;
+    --gym:#7c5cf0;--gym-soft:#ece7fd;
+    --ok:#3ab87a;--water:#3aa8e0;--run:#e07a4f;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
@@ -43,7 +43,7 @@
   .water-btns button{flex:1;padding:13px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);color:var(--txt);font-size:15px;font-weight:700;cursor:pointer}
   .water-btns .add{background:var(--water);color:#04222f;border-color:var(--water)}
 
-  .checkbtn{width:100%;padding:18px;border:none;border-radius:16px;background:var(--acc);color:#0e1116;font-size:18px;font-weight:800;cursor:pointer;transition:.15s}
+  .checkbtn{width:100%;padding:18px;border:none;border-radius:16px;background:var(--acc);color:#fff;font-size:18px;font-weight:800;cursor:pointer;transition:.15s}
   .checkbtn.done{background:var(--card2);color:var(--ok);border:1.5px solid var(--ok)}
   .checkbtn:active{transform:scale(.98)}
   .check-sub{text-align:center;color:var(--mut);font-size:13px;margin-top:10px}
@@ -315,7 +315,7 @@
   </div>
 </div>
 
-<div class="verbadge" id="verBadge">v1.0</div>
+<div class="verbadge" id="verBadge">v1.1</div>
 
 <div class="nav">
   <button class="active" id="navStart"><span class="ic">🏠</span>Início</button>
@@ -324,7 +324,7 @@
 </div>
 
 <script>
-const APP_VERSION="v1.0";
+const APP_VERSION="v1.1";
 const TOTAL=120, BOTTLE=0.6, BOTTLES=7, WEEK_GOAL=7, YEAR=2026;
 const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const MES_ABR=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
