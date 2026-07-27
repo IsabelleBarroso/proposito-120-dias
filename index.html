@@ -315,7 +315,7 @@
   </div>
 </div>
 
-<div class="verbadge" id="verBadge">v1.1</div>
+<div class="verbadge" id="verBadge">v1.3</div>
 
 <div class="nav">
   <button class="active" id="navStart"><span class="ic">🏠</span>Início</button>
@@ -324,7 +324,14 @@
 </div>
 
 <script>
-const APP_VERSION="v1.1";
+const APP_VERSION="v1.3";
+const USER_NAME="Isabelle";
+function greeting(){
+  const h=new Date().getHours();
+  if(h<12)return "Bom dia, "+USER_NAME;
+  if(h<18)return "Boa tarde, "+USER_NAME;
+  return "Boa noite, "+USER_NAME;
+}
 const TOTAL=120, BOTTLE=0.6, BOTTLES=7, WEEK_GOAL=7, YEAR=2026;
 const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const MES_ABR=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
@@ -443,7 +450,97 @@ const DAILY=[
  ["Grandes coisas fez o Senhor por nós.","Salmo 126:3","Olhe o quanto você já caminhou."],
  ["Em paz me deito e logo pego no sono.","Salmo 4:8","Cuidar do corpo é também descansar bem."],
  ["Vinde a mim os que estais cansados.","Mateus 11:28","No cansaço, encontre descanso e recomece."],
- ["Aquele que começou a boa obra a completará.","Filipenses 1:6","O que Deus começou em você, Ele termina."]
+ ["Aquele que começou a boa obra a completará.","Filipenses 1:6","O que Deus começou em você, Ele termina."],
+ ["O justo florescerá como a palmeira.","Salmo 92:12","Constância te faz crescer, mesmo devagar."],
+ ["Não andeis ansiosos por coisa alguma.","Filipenses 4:6","Um dia de cada vez tira o peso do amanhã."],
+ ["O Senhor guardará a tua saída e a tua entrada.","Salmo 121:8","Você é guardada em cada passo do dia."],
+ ["Provai e vede como o Senhor é bom.","Salmo 34:8","O bem que você escolhe hoje tem sabor de vitória."],
+ ["Sê tu forte, e faze-te homem.","1 Reis 2:2","Maturidade é manter o combinado consigo mesma."],
+ ["A esperança não traz confusão.","Romanos 5:5","Continue esperando o melhor de você."],
+ ["Melhor é o fim das coisas do que o princípio.","Eclesiastes 7:8","O difícil já passou. O melhor está adiante."],
+ ["Corramos com perseverança a corrida.","Hebreus 12:1","É uma maratona, não uma corrida de um dia."],
+ ["Deus é o nosso refúgio e fortaleza.","Salmo 46:1","Onde você se apoia é mais firme que a vontade."],
+ ["Cria em mim um coração puro, ó Deus.","Salmo 51:10","Cada dia limpo renova você por dentro."],
+ ["O Senhor está perto dos que têm o coração quebrantado.","Salmo 34:18","Nos dias difíceis, você não está sozinha."],
+ ["Sê firme e corajoso; não temas.","Deuteronômio 31:6","Firmeza é escolher de novo, mesmo com medo."],
+ ["Como a corça anseia pelas águas.","Salmo 42:1","Sede de água, sede de vida. Beba bem hoje."],
+ ["O que persevera até o fim será salvo.","Mateus 24:13","Perseverar é o segredo de tudo que dura."],
+ ["Alegra-te, ó jovem, na tua mocidade.","Eclesiastes 11:9","Cuidar de si agora é presente pro seu futuro."],
+ ["Deus não nos deu espírito de covardia.","2 Timóteo 1:7","Você tem força, amor e domínio próprio."],
+ ["Bendize, ó minha alma, ao Senhor.","Salmo 103:1","Gratidão pelo corpo que te leva tão longe."],
+ ["A palavra de Deus é viva e eficaz.","Hebreus 4:12","Deixe a boa palavra guiar suas escolhas."],
+ ["Não te deixes vencer do mal, mas vence o mal com o bem.","Romanos 12:21","Vença o impulso com uma escolha melhor."],
+ ["O Senhor dá força ao cansado.","Isaías 40:29","Sem energia? Ele multiplica a que você tem."],
+ ["Tudo quanto fizerdes, fazei de coração.","Colossenses 3:23","Faça o dia com capricho, por você."],
+ ["Ele restaura a minha alma.","Salmo 23:3","Descanso e cuidado também restauram você."],
+ ["A vossa fé não se apoie em sabedoria humana.","1 Coríntios 2:5","Confie no processo, mesmo sem entender tudo."],
+ ["Ainda que eu ande pelo vale.","Salmo 23:4","Mesmo nos dias baixos, você segue firme."],
+ ["Fostes comprados por bom preço.","1 Coríntios 6:20","Seu corpo é valioso. Trate-o assim hoje."],
+ ["O fruto do Espírito é domínio próprio.","Gálatas 5:23","Domínio próprio é liberdade, não prisão."],
+ ["Sara-me, Senhor, e sararei.","Jeremias 17:14","Cada bom hábito é um passo de cura."],
+ ["Não olheis cada um para o que é seu.","Filipenses 2:4","Cuidar de você também abençoa quem te ama."],
+ ["Tu és digna, ó Senhor.","Apocalipse 4:11","Você é digna do cuidado que dá a si mesma."],
+ ["Onde está o teu tesouro, aí está o teu coração.","Mateus 6:21","Invista no que realmente importa pra você."],
+ ["Sê exemplo dos fiéis na tua conduta.","1 Timóteo 4:12","Sua constância inspira mais gente do que imagina."],
+ ["O sono do trabalhador é doce.","Eclesiastes 5:12","Esforço honesto rende bom descanso."],
+ ["Alegrai-vos na esperança.","Romanos 12:12","Esperança é combustível pra continuar."],
+ ["Buscai o Senhor enquanto se pode achar.","Isaías 55:6","O melhor momento de recomeçar é agora."],
+ ["Não te esqueças de nenhum dos seus benefícios.","Salmo 103:2","Lembre de tudo que você já conquistou."],
+ ["Quem é fiel no pouco, também é no muito.","Lucas 16:10","O pequeno hábito de hoje prepara o grande amanhã."],
+ ["O Senhor te abençoe e te guarde.","Números 6:24","Que seu dia seja guardado e abençoado."],
+ ["Não desanimeis.","2 Coríntios 4:16","Mesmo cansada por fora, você se renova por dentro."],
+ ["A minha graça te basta.","2 Coríntios 12:9","Nos dias fracos, a força vem de outro lugar."],
+ ["Regozijai-vos no Senhor sempre.","Filipenses 4:4","Ache um motivo pra sorrir hoje."],
+ ["Cada um receberá conforme o seu trabalho.","1 Coríntios 3:8","Seu esforço não passa em branco."],
+ ["Lâmpada para os meus pés é a tua palavra.","Salmo 119:105","Um passo de cada vez é suficiente."],
+ ["Deus é fiel.","1 Coríntios 1:9","O que Ele começou em você não fica pela metade."],
+ ["Bem-aventurado o que persevera.","Tiago 1:12","Persistir hoje te aproxima da recompensa."],
+ ["A tua fé te salvou; vai em paz.","Lucas 7:50","Confie e siga em paz, sem cobrança."],
+ ["Sede sóbrios e vigiai.","1 Pedro 5:8","Atenção às pequenas escolhas do dia."],
+ ["O amor tudo sofre, tudo suporta.","1 Coríntios 13:7","Tenha paciência e amor com você mesma."],
+ ["Vós sois a luz do mundo.","Mateus 5:14","Seu exemplo brilha mais do que você pensa."],
+ ["A esperança adiada deixa o coração enfermo.","Provérbios 13:12","Não adie o cuidado com você. Comece hoje."],
+ ["Deus opera em vós tanto o querer como o realizar.","Filipenses 2:13","Até a vontade de continuar é um presente."],
+ ["Espera no Senhor, anima-te.","Salmo 27:14","Coragem: o esforço de hoje vale a pena."],
+ ["A quem muito foi dado, muito se pedirá.","Lucas 12:48","Cuide bem do corpo e da vida que você tem."],
+ ["Melhor é confiar no Senhor.","Salmo 118:8","Confie mais no plano que no cansaço do dia."],
+ ["Renova os teus dias como antigamente.","Lamentações 5:21","Todo dia é uma chance de recomeçar."],
+ ["Andai como filhos da luz.","Efésios 5:8","Escolhas de luz iluminam sua rotina."],
+ ["A colheita é grande.","Mateus 9:37","Há muito bom fruto vindo do seu esforço."],
+ ["Guarda o teu coração.","Provérbios 4:23","Cuide do que entra: comida, pensamento, hábito."],
+ ["Achegai-vos a Deus, e ele se achegará a vós.","Tiago 4:8","Um passo em direção ao bem já muda o dia."],
+ ["Sê firme na esperança.","Hebreus 10:23","Segure firme no que você acredita."],
+ ["Fazei tudo para a glória de Deus.","1 Coríntios 10:31","Até um copo de água pode ser feito com propósito."],
+ ["O prudente considera bem os seus passos.","Provérbios 14:15","Pense antes; escolha o que te faz bem."],
+ ["Não te canses de fazer o bem a ti.","Gálatas 6:9","Cuidar de você é fazer o bem, não egoísmo."],
+ ["Deus enxugará dos olhos toda lágrima.","Apocalipse 21:4","Dias difíceis passam. Continue."],
+ ["O Senhor é a minha força e o meu cântico.","Salmo 118:14","Faça do esforço um motivo de alegria."],
+ ["A verdade vos libertará.","João 8:32","Ser sincera consigo é o primeiro passo."],
+ ["Ele te sustém.","Salmo 55:22","Quando pesar, lembre que você é sustentada."],
+ ["Levanta-te, resplandece.","Isaías 60:1","Comece o dia decidida a brilhar."],
+ ["A perseverança produz caráter.","Romanos 5:4","Cada dia firme forja quem você está se tornando."],
+ ["Não pela força, mas pelo meu Espírito.","Zacarias 4:6","Nem tudo depende de força bruta. Vá leve."],
+ ["Muitos são os planos no coração.","Provérbios 19:21","Faça sua parte hoje e confie o resto."],
+ ["O Senhor cumprirá o que a mim me concerne.","Salmo 138:8","Você não precisa carregar tudo sozinha."],
+ ["Bem-aventurados os limpos de coração.","Mateus 5:8","Dias limpos deixam a mente mais leve."],
+ ["Fica firme.","1 Coríntios 16:13","Só por hoje, mantenha o combinado."],
+ ["A tua misericórdia é melhor do que a vida.","Salmo 63:3","Seja gentil com você nos tropeços."],
+ ["Correi de tal maneira que o alcanceis.","1 Coríntios 9:24","Corra hoje como quem quer chegar."],
+ ["Deus é amor.","1 João 4:8","Faça suas escolhas de hoje com amor-próprio."],
+ ["Aquietai-vos.","Salmo 46:10","Descansar também faz parte do progresso."],
+ ["Novas são a cada manhã.","Lamentações 3:23","Errou ontem? Hoje as misericórdias são novas."],
+ ["O que buscardes, achareis.","Mateus 7:7","Busque saúde e disciplina; você vai achar."],
+ ["Dá-me entendimento.","Salmo 119:34","Entenda seu porquê e a rotina flui."],
+ ["A alegria será plena.","João 16:24","O fim dessa jornada será cheio de alegria."],
+ ["Firmou os meus passos.","Salmo 40:2","Seus pés estão em terreno firme agora."],
+ ["Perseverai na oração.","Colossenses 4:2","Constância na fé, constância na rotina."],
+ ["O Senhor te guiará continuamente.","Isaías 58:11","Deixe-se guiar, um dia após o outro."],
+ ["Tende bom ânimo.","João 16:33","Ânimo! Você está mais perto do que pensa."],
+ ["A tua recompensa será grande.","Lucas 6:35","O que você planta hoje volta multiplicado."],
+ ["Consumado está.","João 19:30","Chegar ao fim é possível. Você vai chegar."],
+ ["O Senhor é bom para com os que nele esperam.","Lamentações 3:25","Esperar com fé sempre compensa."],
+ ["Portai-vos com dignidade.","Filipenses 1:27","Honre hoje o compromisso que fez consigo."],
+ ["Coroaste o ano com a tua bondade.","Salmo 65:11","Que este ano seja coroado com sua vitória."]
 ];
 
 const K={prop:"iso_prop_v2",gym:"iso_gym_v2",ex:"iso_ex_v2",cardio:"iso_cardio_v2"};
@@ -469,6 +566,7 @@ async function load(){
   try{const r=await window.storage.get(K.cardio);if(r&&r.value)cardioState=JSON.parse(r.value);}catch(e){}
   calMonth=new Date().getMonth();
   const vb=document.getElementById("verBadge");if(vb)vb.textContent=APP_VERSION;
+  const ht=document.getElementById("hTitle");if(ht)ht.textContent=greeting();
   buildWorkoutSelector();
   renderStart();renderWorkout();renderFreq();
 }
@@ -789,7 +887,7 @@ function switchView(v){
   document.getElementById("navStart").classList.toggle("active",v==="start");
   document.getElementById("navWorkout").classList.toggle("active",v==="workout");
   document.getElementById("navFreq").classList.toggle("active",v==="freq");
-  document.getElementById("hTitle").textContent=v==="start"?"Início":v==="workout"?"Treinos":"Frequência";
+  document.getElementById("hTitle").textContent=v==="start"?greeting():v==="workout"?"Treinos":"Frequência";
   if(v==="workout"){renderWorkout();const st=exToday();if(st.timer.running&&!tickHandle)tickHandle=setInterval(updateClock,1000);}
   window.scrollTo(0,0);
 }
