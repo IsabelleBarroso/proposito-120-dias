@@ -315,7 +315,7 @@
   </div>
 </div>
 
-<div class="verbadge" id="verBadge">v1.3</div>
+<div class="verbadge" id="verBadge">v1.4</div>
 
 <div class="nav">
   <button class="active" id="navStart"><span class="ic">🏠</span>Início</button>
@@ -323,8 +323,26 @@
   <button id="navFreq"><span class="ic">📅</span>Frequência</button>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
-const APP_VERSION="v1.3";
+// ===== Firebase (nuvem) =====
+const firebaseConfig={
+  apiKey:"AIzaSyD2S7rnz72gV_i38vKsbGvdPSENOJ_G2oU",
+  authDomain:"desafio-160-dias.firebaseapp.com",
+  databaseURL:"https://desafio-160-dias-default-rtdb.firebaseio.com",
+  projectId:"desafio-160-dias",
+  storageBucket:"desafio-160-dias.firebasestorage.app",
+  messagingSenderId:"168059093372",
+  appId:"1:168059093372:web:f66fe03c4a9ca559b024f9"
+};
+const USER_KEY="isabelle"; // gaveta desta pessoa (Nayane terá "nayane")
+let fbDB=null, fbReady=false;
+try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=true; }catch(e){ console.warn("Firebase off:",e); }
+</script>
+
+<script>
+const APP_VERSION="v1.4";
 const USER_NAME="Isabelle";
 function greeting(){
   const h=new Date().getHours();
@@ -559,21 +577,56 @@ function wDate(){return activeDate||todayStr();}
 function dstr(d){return d.toISOString().slice(0,10);}
 function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
 
+// ===== Camada de armazenamento: localStorage (aparelho) + Firebase (nuvem) =====
+function lsKey(k){return "prop120_"+USER_KEY+"_"+k;}
+function localGet(k){try{const v=localStorage.getItem(lsKey(k));return v?JSON.parse(v):null;}catch(e){return null;}}
+function localSet(k,val){try{localStorage.setItem(lsKey(k),JSON.stringify(val));}catch(e){}}
+function cloudRef(k){return fbReady?fbDB.ref("usuarios/"+USER_KEY+"/"+k):null;}
+function cloudSet(k,val){if(!fbReady)return;try{cloudRef(k).set(val);}catch(e){}}
+async function cloudGet(k){
+  if(!fbReady)return null;
+  try{const snap=await cloudRef(k).once("value");return snap.exists()?snap.val():null;}catch(e){return null;}
+}
+
+let saveTimer=null;
+function saveAll(){
+  // grava local na hora
+  localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
+  // grava nuvem com pequeno debounce
+  if(saveTimer)clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    cloudSet("prop",prop);cloudSet("gym",gym);cloudSet("ex",exState);cloudSet("cardio",cardioState);
+  },400);
+}
+async function saveProp(){saveAll();}
+async function saveGym(){saveAll();}
+async function saveEx(){saveAll();}
+async function saveCardio(){saveAll();}
+
 async function load(){
-  try{const r=await window.storage.get(K.prop);if(r&&r.value)prop=JSON.parse(r.value);}catch(e){}
-  try{const r=await window.storage.get(K.gym);if(r&&r.value)gym=JSON.parse(r.value);}catch(e){}
-  try{const r=await window.storage.get(K.ex);if(r&&r.value)exState=JSON.parse(r.value);}catch(e){}
-  try{const r=await window.storage.get(K.cardio);if(r&&r.value)cardioState=JSON.parse(r.value);}catch(e){}
+  // 1) carrega do aparelho primeiro (rápido, funciona offline)
+  const lp=localGet("prop"),lg=localGet("gym"),le=localGet("ex"),lc=localGet("cardio");
+  if(lp)prop=lp; if(lg)gym=lg; if(le)exState=le; if(lc)cardioState=lc;
   calMonth=new Date().getMonth();
   const vb=document.getElementById("verBadge");if(vb)vb.textContent=APP_VERSION;
   const ht=document.getElementById("hTitle");if(ht)ht.textContent=greeting();
   buildWorkoutSelector();
   renderStart();renderWorkout();renderFreq();
+  // 2) busca da nuvem e atualiza se houver
+  if(fbReady){
+    try{
+      const [cp,cg,ce,cc]=await Promise.all([cloudGet("prop"),cloudGet("gym"),cloudGet("ex"),cloudGet("cardio")]);
+      let changed=false;
+      if(cp){prop=cp;changed=true;} if(cg){gym=cg;changed=true;}
+      if(ce){exState=ce;changed=true;} if(cc){cardioState=cc;changed=true;}
+      if(changed){
+        // salva de volta no aparelho e re-renderiza
+        localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
+        renderStart();renderWorkout();renderFreq();
+      }
+    }catch(e){console.warn("cloud load falhou",e);}
+  }
 }
-async function saveProp(){try{await window.storage.set(K.prop,JSON.stringify(prop));}catch(e){}}
-async function saveGym(){try{await window.storage.set(K.gym,JSON.stringify(gym));}catch(e){}}
-async function saveEx(){try{await window.storage.set(K.ex,JSON.stringify(exState));}catch(e){}}
-async function saveCardio(){try{await window.storage.set(K.cardio,JSON.stringify(cardioState));}catch(e){}}
 
 function currentDayIndex(){if(!prop.startDate)return 0;const n=daysBetween(prop.startDate,todayStr())+1;return Math.max(0,Math.min(TOTAL,n));}
 function isSunday(ds){return new Date(ds+"T00:00").getDay()===0;}
