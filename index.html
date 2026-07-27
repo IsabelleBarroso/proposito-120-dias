@@ -183,6 +183,7 @@
   .yeartotal{text-align:center;margin-top:16px;font-size:14px;color:var(--mut)}
   .yeartotal b{color:var(--gym);font-size:20px}
 
+  .verbadge{position:fixed;bottom:calc(72px + env(safe-area-inset-bottom));right:12px;font-size:10px;color:var(--mut);opacity:.6;background:var(--card2);border:1px solid var(--line);padding:3px 8px;border-radius:20px;z-index:6;pointer-events:none;font-weight:700;letter-spacing:.03em}
   .nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;display:flex;background:var(--card);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
   .nav button{flex:1;background:none;border:none;color:var(--mut);font-size:11px;font-weight:700;padding:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
   .nav button .ic{font-size:20px}
@@ -314,6 +315,8 @@
   </div>
 </div>
 
+<div class="verbadge" id="verBadge">v1.0</div>
+
 <div class="nav">
   <button class="active" id="navStart"><span class="ic">🏠</span>Início</button>
   <button id="navWorkout"><span class="ic">🏋️</span>Treinos</button>
@@ -321,6 +324,7 @@
 </div>
 
 <script>
+const APP_VERSION="v1.0";
 const TOTAL=120, BOTTLE=0.6, BOTTLES=7, WEEK_GOAL=7, YEAR=2026;
 const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const MES_ABR=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
@@ -464,6 +468,7 @@ async function load(){
   try{const r=await window.storage.get(K.ex);if(r&&r.value)exState=JSON.parse(r.value);}catch(e){}
   try{const r=await window.storage.get(K.cardio);if(r&&r.value)cardioState=JSON.parse(r.value);}catch(e){}
   calMonth=new Date().getMonth();
+  const vb=document.getElementById("verBadge");if(vb)vb.textContent=APP_VERSION;
   buildWorkoutSelector();
   renderStart();renderWorkout();renderFreq();
 }
