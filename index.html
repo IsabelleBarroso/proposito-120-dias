@@ -444,7 +444,7 @@
   <button class="prop-add" id="qAddProp">+ Adicionar sacrifício</button>
 </div>
 
-<div class="verbadge" id="verBadge">v2.3</div>
+<div class="verbadge" id="verBadge">v2.5</div>
 <div class="toast" id="toast"></div>
 
 <div class="nav">
@@ -474,7 +474,7 @@ try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=t
 </script>
 
 <script>
-const APP_VERSION="v2.3";
+const APP_VERSION="v2.5";
 const USER_NAME="Isabelle";
 function greeting(){
   const h=new Date().getHours();
@@ -517,6 +517,7 @@ const COURSES_DEFAULT=[
  {t:"Aprendendo a aprender: Ferramentas mentais poderosas para ajudá-lo a dominar assuntos difíceis",a:"Coursera"}
 ];
 
+const HISTORICO_MFIT=["2026-01-03", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-16", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-17", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-28", "2026-03-31", "2026-04-01", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-27", "2026-04-28", "2026-04-29", "2026-05-01", "2026-05-02", "2026-05-04", "2026-05-05", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-15", "2026-05-16", "2026-05-17", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-25", "2026-05-26", "2026-05-27", "2026-06-08", "2026-06-23", "2026-06-27", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-04", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-14", "2026-07-15", "2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02"];
 const QUARESMA_INICIO="2026-08-15";
 const QUARESMA_FIM="2026-09-29";
 const QUARESMA_DIAS=40;
@@ -872,6 +873,13 @@ async function load(){
   // 1) carrega do aparelho primeiro (rápido, funciona offline)
   const lp=localGet("prop"),lg=localGet("gym"),le=localGet("ex"),lc=localGet("cardio");
   if(lp)prop=lp; if(lg)gym=lg; if(le)exState=le; if(lc)cardioState=lc;
+  // importar histórico do MFIT (jan-jul 2026) uma única vez
+  if(!localGet("histMfitImportado_v2")){
+    HISTORICO_MFIT.forEach(ds=>{ if(!gym[ds]||!gym[ds].done) gym[ds]={done:true,min:null}; });
+    localSet("histMfitImportado_v2",true);
+    localSet("gym",gym);
+    saveAll();
+  }
   const lbk=localGet("books"),lco=localGet("courses");
   if(lbk)books=lbk; if(lco)courses=lco;
   const lld=localGet("lentDays"),llp=localGet("lentProps"),llg=localGet("lentGoal");
