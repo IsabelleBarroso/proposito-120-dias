@@ -444,7 +444,7 @@
   <button class="prop-add" id="qAddProp">+ Adicionar sacrifício</button>
 </div>
 
-<div class="verbadge" id="verBadge">v2.5</div>
+<div class="verbadge" id="verBadge">v2.6</div>
 <div class="toast" id="toast"></div>
 
 <div class="nav">
@@ -474,7 +474,7 @@ try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=t
 </script>
 
 <script>
-const APP_VERSION="v2.5";
+const APP_VERSION="v2.6";
 const USER_NAME="Isabelle";
 function greeting(){
   const h=new Date().getHours();
@@ -517,7 +517,7 @@ const COURSES_DEFAULT=[
  {t:"Aprendendo a aprender: Ferramentas mentais poderosas para ajudá-lo a dominar assuntos difíceis",a:"Coursera"}
 ];
 
-const HISTORICO_MFIT=["2026-01-03", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-16", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-17", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-28", "2026-03-31", "2026-04-01", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-27", "2026-04-28", "2026-04-29", "2026-05-01", "2026-05-02", "2026-05-04", "2026-05-05", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-15", "2026-05-16", "2026-05-17", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-25", "2026-05-26", "2026-05-27", "2026-06-08", "2026-06-23", "2026-06-27", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-04", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-14", "2026-07-15", "2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02"];
+const HISTORICO_MFIT=["2026-01-03", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-16", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-17", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-28", "2026-03-31", "2026-04-01", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-27", "2026-04-28", "2026-04-29", "2026-05-01", "2026-05-02", "2026-05-04", "2026-05-05", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-15", "2026-05-16", "2026-05-17", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-25", "2026-05-26", "2026-05-27", "2026-06-08", "2026-06-23", "2026-06-27", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-04", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-14", "2026-07-15", "2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-08", "2026-08-09", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17"];
 const QUARESMA_INICIO="2026-08-15";
 const QUARESMA_FIM="2026-09-29";
 const QUARESMA_DIAS=40;
@@ -860,7 +860,7 @@ function saveAll(){
   saveTimer=setTimeout(()=>{
     cloudSet("prop",prop);cloudSet("gym",gym);cloudSet("ex",exState);cloudSet("cardio",cardioState);
     cloudSet("books",books);cloudSet("courses",courses);
-    cloudSet("lentDays",lentDays);cloudSet("lentProps",lentProps);cloudSet("lentGoal",lentGoal);
+    cloudSet("lentDays",lentDays);cloudSet("lentProps",{v:lentProps});cloudSet("lentGoal",{v:lentGoal});
   },400);
 }
 async function saveProp(){saveAll();}
@@ -870,21 +870,20 @@ async function saveCardio(){saveAll();}
 async function saveGoals(){saveAll();}
 
 async function load(){
-  // 1) carrega do aparelho primeiro (rápido, funciona offline)
+  // 1) carrega TODOS os dados do aparelho primeiro (antes de qualquer save)
   const lp=localGet("prop"),lg=localGet("gym"),le=localGet("ex"),lc=localGet("cardio");
   if(lp)prop=lp; if(lg)gym=lg; if(le)exState=le; if(lc)cardioState=lc;
-  // importar histórico do MFIT (jan-jul 2026) uma única vez
-  if(!localGet("histMfitImportado_v2")){
-    HISTORICO_MFIT.forEach(ds=>{ if(!gym[ds]||!gym[ds].done) gym[ds]={done:true,min:null}; });
-    localSet("histMfitImportado_v2",true);
-    localSet("gym",gym);
-    saveAll();
-  }
   const lbk=localGet("books"),lco=localGet("courses");
   if(lbk)books=lbk; if(lco)courses=lco;
   const lld=localGet("lentDays"),llp=localGet("lentProps"),llg=localGet("lentGoal");
   if(lld)lentDays=lld; if(llp)lentProps=llp; if(llg!==null)lentGoal=llg;
   initGoals();initLent();
+  // agora sim: importar histórico do MFIT (jan-jul 2026) uma única vez
+  if(!localGet("histMfitImportado_v3")){
+    HISTORICO_MFIT.forEach(ds=>{ if(!gym[ds]||!gym[ds].done) gym[ds]={done:true,min:null}; });
+    localSet("histMfitImportado_v3",true);
+    saveAll();
+  }
   calMonth=new Date().getMonth();
   const vb=document.getElementById("verBadge");if(vb)vb.textContent=APP_VERSION;
   const ht=document.getElementById("hTitle");if(ht)ht.textContent=greeting();
@@ -898,7 +897,13 @@ async function load(){
       if(cp){prop=cp;changed=true;} if(cg){gym=cg;changed=true;}
       if(ce){exState=ce;changed=true;} if(cc){cardioState=cc;changed=true;}
       if(cbk){books=cbk;changed=true;} if(cco){courses=cco;changed=true;}
-      if(cld){lentDays=cld;changed=true;} if(clp){lentProps=clp;changed=true;} if(clg!==null&&clg!==undefined){lentGoal=clg;changed=true;}
+      if(cld){lentDays=cld;changed=true;}
+      // sacrifícios e objetivo: desempacota {v:...} e NUNCA deixa vazio da nuvem apagar dado local bom
+      const clpVal=(clp&&clp.v!==undefined)?clp.v:clp;
+      if(Array.isArray(clpVal)&&clpVal.length>0){lentProps=clpVal;changed=true;}
+      else if((!lentProps||lentProps.length===0)&&Array.isArray(clpVal)){lentProps=clpVal;}
+      const clgVal=(clg&&clg.v!==undefined)?clg.v:clg;
+      if(typeof clgVal==="string"&&clgVal.length>0){lentGoal=clgVal;changed=true;}
       if(changed){
         // salva de volta no aparelho e re-renderiza
         localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
