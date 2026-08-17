@@ -35,10 +35,11 @@
   .water-count{font-size:26px;font-weight:800;margin-bottom:2px}
   .water-count small{font-size:15px;color:var(--mut);font-weight:600}
   .water-sub{font-size:13px;color:var(--mut);margin-bottom:14px}
-  .bottles{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
-  .bottle{width:calc((100% - 42px)/7);height:40px;border-radius:8px;border:2px solid var(--line);background:var(--card2);position:relative;overflow:hidden}
-  .bottle.full{border-color:var(--water)}
-  .bottle.full::after{content:"";position:absolute;inset:0;background:var(--water);opacity:.85}
+  .bottles{display:flex;gap:10px;margin-bottom:14px;justify-content:space-between}
+  .bottle{flex:1;max-width:56px;aspect-ratio:1/2;position:relative;cursor:pointer;transition:transform .12s}
+  .bottle:active{transform:scale(.92)}
+  .bottle svg{width:100%;height:100%;display:block}
+  .bottle .water-fill{transition:height .35s ease, y .35s ease}
   .water-btns{display:flex;gap:10px}
   .water-btns button{flex:1;padding:13px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);color:var(--txt);font-size:15px;font-weight:700;cursor:pointer}
   .water-btns .add{background:var(--water);color:#04222f;border-color:var(--water)}
@@ -271,7 +272,7 @@
   <div class="card">
     <div class="lbl">Água — meta 4L</div>
     <div class="water-count"><b id="waterL">0,0L</b> <small>/ 4,0L</small></div>
-    <div class="water-sub" id="waterSub">0 de 7 garrafas (600ml cada)</div>
+    <div class="water-sub" id="waterSub">0 de 5 garrafas (800ml cada)</div>
     <div class="bottles" id="bottles"></div>
     <div class="water-btns">
       <button class="add" id="waterAdd">+ 1 garrafa</button>
@@ -444,7 +445,7 @@
   <button class="prop-add" id="qAddProp">+ Adicionar sacrifício</button>
 </div>
 
-<div class="verbadge" id="verBadge">v2.6</div>
+<div class="verbadge" id="verBadge">v3.0</div>
 <div class="toast" id="toast"></div>
 
 <div class="nav">
@@ -474,7 +475,7 @@ try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=t
 </script>
 
 <script>
-const APP_VERSION="v2.6";
+const APP_VERSION="v3.0";
 const USER_NAME="Isabelle";
 function greeting(){
   const h=new Date().getHours();
@@ -489,7 +490,7 @@ function showToast(msg){
   if(toastTimer)clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
 }
-const TOTAL=120, BOTTLE=0.6, BOTTLES=7, WEEK_GOAL=7, YEAR=2026;
+const TOTAL=120, BOTTLE=0.8, BOTTLES=5, WEEK_GOAL=7, YEAR=2026;
 const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const MES_ABR=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 
@@ -873,6 +874,8 @@ async function load(){
   // 1) carrega TODOS os dados do aparelho primeiro (antes de qualquer save)
   const lp=localGet("prop"),lg=localGet("gym"),le=localGet("ex"),lc=localGet("cardio");
   if(lp)prop=lp; if(lg)gym=lg; if(le)exState=le; if(lc)cardioState=lc;
+  // restaurar data de início da jornada se foi perdida (bug anterior). O propósito começou em 03/08/2026.
+  if(!prop.startDate){ prop.startDate="2026-08-03"; if(!prop.days)prop.days={}; }
   const lbk=localGet("books"),lco=localGet("courses");
   if(lbk)books=lbk; if(lco)courses=lco;
   const lld=localGet("lentDays"),llp=localGet("lentProps"),llg=localGet("lentGoal");
@@ -882,6 +885,19 @@ async function load(){
   if(!localGet("histMfitImportado_v3")){
     HISTORICO_MFIT.forEach(ds=>{ if(!gym[ds]||!gym[ds].done) gym[ds]={done:true,min:null}; });
     localSet("histMfitImportado_v3",true);
+    saveAll();
+  }
+  // restaurar compromissos do propósito (sem álcool + sem doce) de 03/08 a 17/08, uma vez só
+  if(!localGet("propRestaurado_v1")){
+    const inicio=parseLocal("2026-08-03");
+    for(let i=0;i<15;i++){ // 03/08 até 17/08 = 15 dias
+      const d=parseLocal("2026-08-03");d.setDate(d.getDate()+i);const ds=dstr(d);
+      if(!prop.days[ds])prop.days[ds]={};
+      prop.days[ds].alcool=true;
+      prop.days[ds].doce=true;
+      if(prop.days[ds].water===undefined)prop.days[ds].water=0;
+    }
+    localSet("propRestaurado_v1",true);
     saveAll();
   }
   calMonth=new Date().getMonth();
@@ -922,6 +938,7 @@ function todayProp(){if(!prop.days[todayStr()])prop.days[todayStr()]={alcool:fal
   if(d.alcool===undefined)d.alcool=!!d.done; // migração do modelo antigo
   if(d.doce===undefined)d.doce=!!d.done;
   if(d.missa===undefined)d.missa=false;
+  if(typeof d.water!=="number")d.water=0;
   return d;}
 /* um dia conta como cumprido se marcou qualquer compromisso (álcool, doce, missa) ou foi à academia */
 function dayFulfilled(ds){
@@ -1015,9 +1032,30 @@ function openDayModal(ds){
 function closeDayModal(){document.getElementById("dayModal").classList.add("hidden");dayModalDate=null;}
 function renderWater(count){
   document.getElementById("waterL").textContent=(count*BOTTLE).toFixed(1).replace(".",",")+"L";
-  document.getElementById("waterSub").textContent=count+" de "+BOTTLES+" garrafas (600ml cada)";
+  document.getElementById("waterSub").textContent=count+" de "+BOTTLES+" garrafas ("+Math.round(BOTTLE*1000)+"ml cada)";
   const b=document.getElementById("bottles");b.innerHTML="";
-  for(let i=0;i<BOTTLES;i++){const el=document.createElement("div");el.className="bottle"+(i<count?" full":"");b.appendChild(el);}
+  for(let i=0;i<BOTTLES;i++){
+    const full=i<count;
+    const el=document.createElement("div");el.className="bottle";
+    // garrafa: gargalo + corpo. água enche o corpo quando "full"
+    el.innerHTML=
+      '<svg viewBox="0 0 40 80" xmlns="http://www.w3.org/2000/svg">'+
+        '<defs><clipPath id="bc'+i+'"><path d="M14 14 Q14 10 16 8 L16 4 Q16 2 18 2 L22 2 Q24 2 24 4 L24 8 Q26 10 26 14 L28 22 Q30 26 30 32 L30 70 Q30 76 24 76 L16 76 Q10 76 10 70 L10 32 Q10 26 12 22 Z"/></clipPath></defs>'+
+        // contorno da garrafa
+        '<path d="M14 14 Q14 10 16 8 L16 4 Q16 2 18 2 L22 2 Q24 2 24 4 L24 8 Q26 10 26 14 L28 22 Q30 26 30 32 L30 70 Q30 76 24 76 L16 76 Q10 76 10 70 L10 32 Q10 26 12 22 Z" fill="var(--card2)" stroke="'+(full?'var(--water)':'var(--line)')+'" stroke-width="2"/>'+
+        // água (dentro do clip da garrafa)
+        (full?'<rect class="water-fill" x="0" y="20" width="40" height="58" fill="var(--water)" opacity="0.85" clip-path="url(#bc'+i+')"/>':'')+
+        // tampinha
+        '<rect x="15" y="0" width="10" height="4" rx="1.5" fill="'+(full?'var(--water)':'var(--line)')+'"/>'+
+      '</svg>';
+    el.addEventListener("click",()=>{
+      const td=todayProp();
+      // tocar numa garrafa cheia esvazia até ela; numa vazia enche até ela
+      td.water=(i<count)?i:i+1;
+      renderWater(td.water);saveProp();
+    });
+    b.appendChild(el);
+  }
 }
 
 function buildWorkoutSelector(){
