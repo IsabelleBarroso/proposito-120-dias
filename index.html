@@ -171,6 +171,48 @@
   .mm-total b{color:var(--gym);font-size:18px}
   .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(20px);background:var(--ok);color:#fff;padding:14px 22px;border-radius:14px;font-size:15px;font-weight:800;z-index:100;opacity:0;transition:opacity .25s,transform .25s;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:90%;text-align:center;pointer-events:none}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .more-menu{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:flex-end}
+  .more-menu.hidden{display:none}
+  .more-sheet{background:var(--card);width:100%;max-width:520px;margin:0 auto;border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom))}
+  .more-title{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:12px}
+  .more-item{width:100%;display:flex;align-items:center;gap:14px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;text-align:left;margin-bottom:10px}
+  .more-ic{font-size:26px;flex-shrink:0}
+  .more-item b{font-size:15px}
+  .more-sub{font-size:12px;color:var(--mut);margin-top:2px}
+  .more-close{width:100%;padding:13px;border-radius:14px;border:none;background:var(--acc);color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+  .big-win{background:linear-gradient(135deg,var(--acc-soft),#e8f7ef);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:8px;margin-bottom:14px;text-align:center}
+  .big-win .n{font-size:30px;font-weight:800;color:var(--ok)}
+  .big-win .t{font-size:13px;color:var(--mut);font-weight:600;margin-top:2px}
+  .bio-add{width:100%;padding:14px;border-radius:14px;border:none;background:var(--acc);color:#fff;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:16px}
+  .bio-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+  .bio-stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+  .bio-stat .lbl{font-size:11px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .bio-stat .val{font-size:22px;font-weight:800;margin-top:2px}
+  .bio-stat .delta{font-size:12px;font-weight:700;margin-top:2px}
+  .delta.down{color:var(--ok)}.delta.up{color:var(--gord,#f0663f)}
+  .chart-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:12px}
+  .chart-legend span{display:flex;align-items:center;gap:5px;color:var(--mut);font-weight:600}
+  .cdot{width:10px;height:10px;border-radius:50%}
+  .exam{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+  .exam-head{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+  .exam-date{font-weight:800;font-size:15px}
+  .exam-score{font-size:12px;color:var(--acc);font-weight:700;background:var(--acc-soft);padding:3px 10px;border-radius:20px}
+  .exam-quick{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .exam-quick div{font-size:13px}.exam-quick b{color:var(--txt)}.exam-quick span{color:var(--mut)}
+  .exam-detail{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:none}
+  .exam.open .exam-detail{display:block}
+  .detail-group{margin-bottom:12px}
+  .detail-group h4{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--acc);font-weight:800;margin-bottom:6px}
+  .detail-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;border-bottom:1px dashed var(--line)}
+  .detail-row span{color:var(--mut)}.detail-row b{font-weight:700}
+  .exam .arrow{font-size:12px;color:var(--mut);transition:transform .2s}
+  .exam.open .arrow{transform:rotate(180deg)}
+  .exam-del{margin-top:8px;width:100%;padding:9px;border:none;background:transparent;color:var(--gord,#f0663f);font-size:12px;font-weight:700;cursor:pointer;border-radius:8px}
+  .bioform-row{margin-bottom:10px}
+  .bioform-row label{display:block;font-size:12px;color:var(--mut);font-weight:600;margin-bottom:3px}
+  .bioform-row input{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--card2);color:var(--txt)}
+  .bioform-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .bioform-group-title{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--acc);font-weight:800;margin:14px 0 8px}
   .rest-timer{position:fixed;right:14px;bottom:86px;z-index:90;background:var(--card);border:1.5px solid var(--acc);border-radius:16px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.15);width:150px;text-align:center}
   .rest-timer.hidden{display:none}
   .rest-label{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:2px}
@@ -368,6 +410,36 @@
   </div>
 </div>
 
+<div class="modal-bg hidden" id="bioModal">
+  <div class="modal" style="max-height:85vh;overflow-y:auto">
+    <div class="modal-title">Novo exame</div>
+    <div class="bioform-row"><label>Data do exame</label><input type="date" id="bfData"></div>
+    <div class="bioform-group-title">Composição</div>
+    <div class="bioform-grid">
+      <div class="bioform-row"><label>Peso (kg)</label><input type="number" step="0.1" id="bfPeso"></div>
+      <div class="bioform-row"><label>Massa muscular MME (kg)</label><input type="number" step="0.1" id="bfMme"></div>
+      <div class="bioform-row"><label>Massa de gordura (kg)</label><input type="number" step="0.1" id="bfGord"></div>
+      <div class="bioform-row"><label>Água corporal (L)</label><input type="number" step="0.1" id="bfAgua"></div>
+      <div class="bioform-row"><label>Proteínas (kg)</label><input type="number" step="0.01" id="bfProt"></div>
+      <div class="bioform-row"><label>Minerais (kg)</label><input type="number" step="0.01" id="bfMin"></div>
+    </div>
+    <div class="bioform-group-title">Obesidade & metabolismo</div>
+    <div class="bioform-grid">
+      <div class="bioform-row"><label>IMC</label><input type="number" step="0.1" id="bfImc"></div>
+      <div class="bioform-row"><label>PGC (% gordura)</label><input type="number" step="0.1" id="bfPgc"></div>
+      <div class="bioform-row"><label>Gordura visceral (nível)</label><input type="number" step="1" id="bfVisc"></div>
+      <div class="bioform-row"><label>Taxa metab. basal (kcal)</label><input type="number" step="1" id="bfTmb"></div>
+      <div class="bioform-row"><label>Cintura-quadril</label><input type="number" step="0.01" id="bfRcq"></div>
+      <div class="bioform-row"><label>Ângulo de fase (°)</label><input type="number" step="0.1" id="bfAf"></div>
+      <div class="bioform-row"><label>Pontuação InBody</label><input type="number" step="1" id="bfPts"></div>
+    </div>
+    <div class="modal-btns" style="margin-top:14px">
+      <button class="modal-cancel" id="bfCancel">Cancelar</button>
+      <button class="modal-save" id="bfSave">Salvar exame</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg hidden" id="dayModal">
   <div class="modal">
     <div class="modal-title" id="dmTitle">—</div>
@@ -454,6 +526,23 @@
   <button class="prop-add" id="qAddProp">+ Adicionar sacrifício</button>
 </div>
 
+<div class="wrap hidden" id="viewBio">
+  <div class="big-win" id="bioBigWin"></div>
+  <button class="bio-add" id="bioAdd">+ Registrar novo exame</button>
+  <div class="bio-summary" id="bioSummary"></div>
+  <div class="sec-title">📈 Evolução</div>
+  <div class="card" id="bioChartCard"><div id="bioChart"></div>
+    <div class="chart-legend">
+      <span><span class="cdot" style="background:#8b5cf6"></span>Peso</span>
+      <span><span class="cdot" style="background:#f0663f"></span>Gordura</span>
+      <span><span class="cdot" style="background:#3ab87a"></span>Músculo</span>
+      <span><span class="cdot" style="background:#e8a13a"></span>% Gordura</span>
+    </div>
+  </div>
+  <div class="sec-title">📋 Meus exames</div>
+  <div id="bioList"></div>
+</div>
+
 <div id="restTimer" class="rest-timer hidden">
   <div class="rest-label">Descanso</div>
   <div class="rest-display" id="restDisplay">00:00</div>
@@ -472,6 +561,15 @@
   <button id="navFreq"><span class="ic">📅</span>Frequência</button>
   <button id="navGoals"><span class="ic">🎯</span>Objetivos</button>
   <button id="navLent"><span class="ic">✝️</span>Quaresma</button>
+  <button id="navMore"><span class="ic">⋯</span>Mais</button>
+</div>
+
+<div id="moreMenu" class="more-menu hidden">
+  <div class="more-sheet">
+    <div class="more-title">Mais</div>
+    <button class="more-item" id="moreBio"><span class="more-ic">⚖️</span><div><b>Bioimpedância</b><div class="more-sub">Acompanhe sua evolução corporal</div></div></button>
+    <button class="more-close" id="moreClose">Fechar</button>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -493,7 +591,7 @@ try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=t
 </script>
 
 <script>
-const APP_VERSION="v3.3";
+const APP_VERSION="v3.4";
 const USER_NAME="Isabelle";
 function greeting(){
   const h=new Date().getHours();
@@ -537,6 +635,7 @@ const COURSES_DEFAULT=[
 ];
 
 const HISTORICO_MFIT=["2026-01-03", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-16", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-17", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-28", "2026-03-31", "2026-04-01", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-27", "2026-04-28", "2026-04-29", "2026-05-01", "2026-05-02", "2026-05-04", "2026-05-05", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-15", "2026-05-16", "2026-05-17", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-25", "2026-05-26", "2026-05-27", "2026-06-08", "2026-06-23", "2026-06-27", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-04", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-14", "2026-07-15", "2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-08", "2026-08-09", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17"];
+const BIO_INICIAL=[{"data": "27/02/2025", "peso": 129.0, "mme": 32.5, "gord": 71.5, "pgc": 55.4, "imc": 49.8, "pts": 41, "af": null, "agua": 42.7, "prot": 11.4, "min": 3.39, "tmb": 1612, "visc": 23, "rcq": 0.89, "iso": "2025-02-27"}, {"data": "08/05/2025", "peso": 116.5, "mme": 30.5, "gord": 62.5, "pgc": 53.6, "imc": 44.9, "pts": 46, "af": null, "agua": 40.0, "prot": 10.8, "min": 3.25, "tmb": 1537, "visc": 24, "rcq": 0.97, "iso": "2025-05-08"}, {"data": "17/07/2025", "peso": 106.5, "mme": 28.7, "gord": 55.0, "pgc": 51.7, "imc": 41.1, "pts": 50, "af": null, "agua": 38.1, "prot": 10.2, "min": 3.22, "tmb": 1482, "visc": 23, "rcq": 0.99, "iso": "2025-07-17"}, {"data": "04/09/2025", "peso": 104.4, "mme": 29.7, "gord": 51.4, "pgc": 49.3, "imc": 40.3, "pts": 55, "af": 5.9, "agua": 39.0, "prot": 10.6, "min": 3.44, "tmb": 1514, "visc": 21, "rcq": 0.91, "iso": "2025-09-04"}, {"data": "15/01/2026", "peso": 106.5, "mme": 30.6, "gord": 52.1, "pgc": 48.9, "imc": 41.1, "pts": 57, "af": 6.2, "agua": 40.1, "prot": 10.7, "min": 3.56, "tmb": 1546, "visc": 22, "rcq": 0.95, "iso": "2026-01-15"}, {"data": "13/02/2026", "peso": 101.1, "mme": 28.7, "gord": 50.0, "pgc": 49.5, "imc": 39.0, "pts": 54, "af": 6.5, "agua": 37.5, "prot": 10.2, "min": 3.41, "tmb": 1474, "visc": 22, "rcq": 1.01, "iso": "2026-02-13"}, {"data": "12/03/2026", "peso": 99.3, "mme": 28.2, "gord": 48.9, "pgc": 49.3, "imc": 38.3, "pts": 55, "af": 6.3, "agua": 37.0, "prot": 10.1, "min": 3.31, "tmb": 1458, "visc": 21, "rcq": 0.95, "iso": "2026-03-12"}, {"data": "10/04/2026", "peso": 96.6, "mme": 28.0, "gord": 46.4, "pgc": 48.0, "imc": 37.3, "pts": 57, "af": 6.1, "agua": 36.9, "prot": 9.9, "min": 3.4, "tmb": 1455, "visc": 21, "rcq": 0.98, "iso": "2026-04-10"}, {"data": "11/05/2026", "peso": 94.5, "mme": 27.7, "gord": 44.6, "pgc": 47.2, "imc": 36.5, "pts": 58, "af": 5.9, "agua": 36.7, "prot": 9.8, "min": 3.4, "tmb": 1448, "visc": 19, "rcq": 0.92, "iso": "2026-05-11"}, {"data": "23/07/2026", "peso": 96.4, "mme": 29.5, "gord": 43.4, "pgc": 45.0, "imc": 37.2, "pts": 64, "af": 5.8, "agua": 39.0, "prot": 10.5, "min": 3.54, "tmb": 1515, "visc": 18, "rcq": 0.89, "iso": "2026-07-23"}];
 const QUARESMA_INICIO="2026-08-15";
 const QUARESMA_FIM="2026-09-29";
 const QUARESMA_DIAS=40;
@@ -874,12 +973,14 @@ function saveAll(){
   localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
   localSet("books",books);localSet("courses",courses);
   localSet("lentDays",lentDays);localSet("lentProps",lentProps);localSet("lentGoal",lentGoal);
+  localSet("bio",bioExames);
   // grava nuvem com pequeno debounce
   if(saveTimer)clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{
     cloudSet("prop",prop);cloudSet("gym",gym);cloudSet("ex",exState);cloudSet("cardio",cardioState);
     cloudSet("books",books);cloudSet("courses",courses);
     cloudSet("lentDays",lentDays);cloudSet("lentProps",{v:lentProps});cloudSet("lentGoal",{v:lentGoal});
+    cloudSet("bio",{v:bioExames});
   },400);
 }
 async function saveProp(){saveAll();}
@@ -898,7 +999,8 @@ async function load(){
   if(lbk)books=lbk; if(lco)courses=lco;
   const lld=localGet("lentDays"),llp=localGet("lentProps"),llg=localGet("lentGoal");
   if(lld)lentDays=lld; if(llp)lentProps=llp; if(llg!==null)lentGoal=llg;
-  initGoals();initLent();
+  const lbio=localGet("bio"); if(lbio)bioExames=lbio;
+  initGoals();initLent();initBio();
   // agora sim: importar histórico do MFIT (jan-jul 2026) uma única vez
   if(!localGet("histMfitImportado_v3")){
     HISTORICO_MFIT.forEach(ds=>{ if(!gym[ds]||!gym[ds].done) gym[ds]={done:true,min:null}; });
@@ -927,6 +1029,7 @@ async function load(){
   if(fbReady){
     try{
       const [cp,cg,ce,cc,cbk,cco,cld,clp,clg]=await Promise.all([cloudGet("prop"),cloudGet("gym"),cloudGet("ex"),cloudGet("cardio"),cloudGet("books"),cloudGet("courses"),cloudGet("lentDays"),cloudGet("lentProps"),cloudGet("lentGoal")]);
+      const cbio=await cloudGet("bio");
       let changed=false;
       if(cp){prop=cp;changed=true;} if(cg){gym=cg;changed=true;}
       if(ce){exState=ce;changed=true;} if(cc){cardioState=cc;changed=true;}
@@ -938,11 +1041,14 @@ async function load(){
       else if((!lentProps||lentProps.length===0)&&Array.isArray(clpVal)){lentProps=clpVal;}
       const clgVal=(clg&&clg.v!==undefined)?clg.v:clg;
       if(typeof clgVal==="string"&&clgVal.length>0){lentGoal=clgVal;changed=true;}
+      const cbioVal=(cbio&&cbio.v!==undefined)?cbio.v:cbio;
+      if(Array.isArray(cbioVal)&&cbioVal.length>0){bioExames=cbioVal;changed=true;}
       if(changed){
         // salva de volta no aparelho e re-renderiza
         localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
         localSet("books",books);localSet("courses",courses);
         localSet("lentDays",lentDays);localSet("lentProps",lentProps);localSet("lentGoal",lentGoal);
+        localSet("bio",bioExames);
         renderStart();renderWorkout();renderFreq();
       }
     }catch(e){console.warn("cloud load falhou",e);}
@@ -1369,6 +1475,14 @@ document.getElementById("navFreq").addEventListener("click",()=>switchView("freq
 document.getElementById("navGoals").addEventListener("click",()=>switchView("goals"));
  document.getElementById("navLent").addEventListener("click",()=>switchView("lent"));
  document.getElementById("qAddProp").addEventListener("click",addLentProp);
+ document.getElementById("navMore").addEventListener("click",()=>document.getElementById("moreMenu").classList.remove("hidden"));
+ document.getElementById("moreClose").addEventListener("click",()=>document.getElementById("moreMenu").classList.add("hidden"));
+ document.getElementById("moreMenu").addEventListener("click",e=>{if(e.target.id==="moreMenu")document.getElementById("moreMenu").classList.add("hidden");});
+ document.getElementById("moreBio").addEventListener("click",()=>{document.getElementById("moreMenu").classList.add("hidden");switchView("bio");});
+ document.getElementById("bioAdd").addEventListener("click",openBioModal);
+ document.getElementById("bfSave").addEventListener("click",saveBioExam);
+ document.getElementById("bfCancel").addEventListener("click",closeBioModal);
+ document.getElementById("bioModal").addEventListener("click",e=>{if(e.target.id==="bioModal")closeBioModal();});
  document.getElementById("qGoalEdit").addEventListener("click",editLentGoal);
 document.getElementById("addBook").addEventListener("click",()=>addGoalItem("book"));
 document.getElementById("addCourse").addEventListener("click",()=>addGoalItem("course"));
@@ -1441,22 +1555,84 @@ function restBindOnce(){
   if(r&&!r.dataset.b){r.addEventListener("click",restReset);r.dataset.b="1";}
 }
 
+// ===== Bioimpedância =====
+let bioExames=null;
+function initBio(){ if(bioExames===null)bioExames=BIO_INICIAL.map(e=>({...e})); }
+function bioSorted(){ return [...bioExames].sort((a,b)=>a.iso<b.iso?-1:1); }
+function bioFmt(n,suf){ return (n===null||n===undefined||n==="")?"—":(String(n).replace(".",",")+(suf||"")); }
+function renderBio(){
+  initBio();
+  const arr=bioSorted();
+  if(arr.length===0){
+    document.getElementById("bioBigWin").innerHTML='<div class="t">Nenhum exame ainda. Toque em "Registrar novo exame".</div>';
+    document.getElementById("bioSummary").innerHTML="";document.getElementById("bioChart").innerHTML="";document.getElementById("bioList").innerHTML="";return;
+  }
+  const primeiro=arr[0], ultimo=arr[arr.length-1], pen=arr.length>1?arr[arr.length-2]:null;
+  const difPeso=(ultimo.peso-primeiro.peso);
+  document.getElementById("bioBigWin").innerHTML=
+    '<div class="n">'+(difPeso<=0?"\u2212":"+")+Math.abs(difPeso).toFixed(1).replace(".",",")+' kg</div>'+
+    '<div class="t">de '+bioFmt(primeiro.peso)+' kg ('+primeiro.data.slice(3)+') para '+bioFmt(ultimo.peso)+' kg ('+ultimo.data.slice(3)+')'+(difPeso<0?' \ud83c\udf89':'')+'</div>';
+  function statCard(lbl,val,suf,cur,prev,melhorCai){
+    let d="";
+    if(prev!==null&&prev!==undefined){
+      const dif=cur-prev;const cls=(melhorCai?(dif<0?"down":"up"):(dif>0?"down":"up"));const arrow=dif<0?"\u25bc":(dif>0?"\u25b2":"\u2013");
+      if(Math.abs(dif)>0.001)d='<div class="delta '+cls+'">'+arrow+' '+Math.abs(dif).toFixed(1).replace(".",",")+(suf||"")+'</div>';
+    }
+    return '<div class="bio-stat"><div class="lbl">'+lbl+'</div><div class="val">'+bioFmt(val,suf)+'</div>'+d+'</div>';
+  }
+  document.getElementById("bioSummary").innerHTML=
+    statCard("Peso atual",ultimo.peso," kg",ultimo.peso,pen?pen.peso:null,true)+
+    statCard("% Gordura",ultimo.pgc,"%",ultimo.pgc,pen?pen.pgc:null,true)+
+    statCard("Massa muscular",ultimo.mme," kg",ultimo.mme,pen?pen.mme:null,false)+
+    statCard("Pontua\u00e7\u00e3o",ultimo.pts,"",ultimo.pts,pen?pen.pts:null,false);
+  document.getElementById("bioChart").innerHTML=bioChartSVG(arr);
+  const rev=[...arr].reverse();
+  document.getElementById("bioList").innerHTML=rev.map((e,idx)=>bioExamCard(e,idx===0)).join("");
+  document.querySelectorAll("#bioList .exam-head").forEach(h=>{h.addEventListener("click",()=>h.closest(".exam").classList.toggle("open"));});
+  document.querySelectorAll("#bioList .exam-del").forEach(btn=>{btn.addEventListener("click",e=>{e.stopPropagation();const iso=btn.dataset.iso;if(confirm("Remover o exame de "+btn.dataset.data+"?")){bioExames=bioExames.filter(x=>x.iso!==iso);saveBio();renderBio();}});});
+}
+function bioChartSVG(arr){
+  const n=arr.length; if(n<2)return '<div style="text-align:center;color:var(--mut);font-size:13px;padding:20px">Registre pelo menos 2 exames para ver o gr\u00e1fico.</div>';
+  const x0=45,x1=655,y0=20,y1=235;const xc=i=>x0+(x1-x0)*i/(n-1);
+  function yc(vals){const lo0=Math.min(...vals),hi0=Math.max(...vals);let lo=lo0,hi=hi0;const rng=(hi-lo)||1;lo-=rng*0.12;hi+=rng*0.12;return vals.map(v=>y1-(y1-y0)*(v-lo)/(hi-lo));}
+  function line(campo,color,dash){const vals=arr.map(e=>e[campo]);const ys=yc(vals);const pts=vals.map((v,i)=>xc(i).toFixed(0)+","+ys[i].toFixed(0)).join(" ");const dots=vals.map((v,i)=>'<circle cx="'+xc(i).toFixed(0)+'" cy="'+ys[i].toFixed(0)+'" r="3" fill="'+color+'"/>').join("");return '<polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="2"'+(dash?' stroke-dasharray="'+dash+'"':'')+'/>'+dots;}
+  let labels="";arr.forEach((e,i)=>{if(i%2===0||i===n-1){const p=e.data.split("/");labels+='<text x="'+xc(i).toFixed(0)+'" y="252" font-size="8" fill="#8b83a8" text-anchor="middle">'+p[1]+"/"+p[2].slice(2)+'</text>';}});
+  return '<svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto"><line x1="45" y1="15" x2="45" y2="238" stroke="#e3ddf3" stroke-width="1"/><line x1="45" y1="238" x2="660" y2="238" stroke="#e3ddf3" stroke-width="1"/>'+line("peso","#8b5cf6")+line("gord","#f0663f")+line("mme","#3ab87a")+line("pgc","#e8a13a","4 3")+labels+'</svg>';
+}
+function bioExamCard(e,aberto){
+  const af=e.af?(bioFmt(e.af)+"\u00b0"):"\u2014";
+  return '<div class="exam'+(aberto?' open':'')+'"><div class="exam-head"><div class="exam-date">'+e.data+'</div><div style="display:flex;align-items:center;gap:8px"><span class="exam-score">'+bioFmt(e.pts)+'/100</span><span class="arrow">\u25bc</span></div></div><div class="exam-quick"><div><b>'+bioFmt(e.peso)+' kg</b> <span>peso</span></div><div><b>'+bioFmt(e.pgc)+'%</b> <span>gordura</span></div><div><b>'+bioFmt(e.mme)+' kg</b> <span>m\u00fasculo</span></div></div><div class="exam-detail"><div class="detail-group"><h4>Composi\u00e7\u00e3o</h4><div class="detail-row"><span>Peso</span><b>'+bioFmt(e.peso)+' kg</b></div><div class="detail-row"><span>Massa muscular (MME)</span><b>'+bioFmt(e.mme)+' kg</b></div><div class="detail-row"><span>Massa de gordura</span><b>'+bioFmt(e.gord)+' kg</b></div><div class="detail-row"><span>\u00c1gua corporal</span><b>'+bioFmt(e.agua)+' L</b></div><div class="detail-row"><span>Prote\u00ednas</span><b>'+bioFmt(e.prot)+' kg</b></div><div class="detail-row"><span>Minerais</span><b>'+bioFmt(e.min)+' kg</b></div></div><div class="detail-group"><h4>Obesidade & metabolismo</h4><div class="detail-row"><span>IMC</span><b>'+bioFmt(e.imc)+'</b></div><div class="detail-row"><span>PGC (% gordura)</span><b>'+bioFmt(e.pgc)+'%</b></div><div class="detail-row"><span>Gordura visceral</span><b>n\u00edvel '+bioFmt(e.visc)+'</b></div><div class="detail-row"><span>Taxa metab\u00f3lica basal</span><b>'+bioFmt(e.tmb)+' kcal</b></div><div class="detail-row"><span>Rela\u00e7\u00e3o cintura-quadril</span><b>'+bioFmt(e.rcq)+'</b></div><div class="detail-row"><span>\u00c2ngulo de fase</span><b>'+af+'</b></div><div class="detail-row"><span>Pontua\u00e7\u00e3o InBody</span><b>'+bioFmt(e.pts)+'/100</b></div></div><button class="exam-del" data-iso="'+e.iso+'" data-data="'+e.data+'">Remover este exame</button></div></div>';
+}
+function openBioModal(){document.getElementById("bfData").value=todayStr();["bfPeso","bfMme","bfGord","bfAgua","bfProt","bfMin","bfImc","bfPgc","bfVisc","bfTmb","bfRcq","bfAf","bfPts"].forEach(id=>{document.getElementById(id).value="";});document.getElementById("bioModal").classList.remove("hidden");}
+function closeBioModal(){document.getElementById("bioModal").classList.add("hidden");}
+function saveBioExam(){
+  const iso=document.getElementById("bfData").value;if(!iso){alert("Escolha a data do exame.");return;}
+  const p=iso.split("-");const data=p[2]+"/"+p[1]+"/"+p[0];
+  const num=id=>{const v=document.getElementById(id).value;return v===""?null:parseFloat(v.replace(",","."));};
+  const novo={data,iso,peso:num("bfPeso"),mme:num("bfMme"),gord:num("bfGord"),agua:num("bfAgua"),prot:num("bfProt"),min:num("bfMin"),imc:num("bfImc"),pgc:num("bfPgc"),visc:num("bfVisc"),tmb:num("bfTmb"),rcq:num("bfRcq"),af:num("bfAf"),pts:num("bfPts")};
+  bioExames=bioExames.filter(x=>x.iso!==iso);bioExames.push(novo);saveBio();closeBioModal();renderBio();showToast("Exame de "+data+" salvo! \u2713");
+}
+async function saveBio(){saveAll();}
+
+
 function switchView(v){
   document.getElementById("viewStart").classList.toggle("hidden",v!=="start");
   document.getElementById("viewWorkout").classList.toggle("hidden",v!=="workout");
   document.getElementById("viewFreq").classList.toggle("hidden",v!=="freq");
   document.getElementById("viewGoals").classList.toggle("hidden",v!=="goals");
   document.getElementById("viewLent").classList.toggle("hidden",v!=="lent");
+  document.getElementById("viewBio").classList.toggle("hidden",v!=="bio");
   document.getElementById("navStart").classList.toggle("active",v==="start");
   document.getElementById("navWorkout").classList.toggle("active",v==="workout");
   document.getElementById("navFreq").classList.toggle("active",v==="freq");
   document.getElementById("navGoals").classList.toggle("active",v==="goals");
   document.getElementById("navLent").classList.toggle("active",v==="lent");
-  document.getElementById("hTitle").textContent=v==="start"?greeting():v==="workout"?"Treinos":v==="freq"?"Frequência":v==="goals"?"Objetivos":"Quaresma";
+  document.getElementById("hTitle").textContent=v==="start"?greeting():v==="workout"?"Treinos":v==="freq"?"Frequência":v==="goals"?"Objetivos":v==="lent"?"Quaresma":"Bioimpedância";
   const rt=document.getElementById("restTimer");if(rt){rt.classList.toggle("hidden",v!=="workout");restBindOnce();}
   if(v==="workout"){renderWorkout();const st=exToday();if(st.timer.running&&!tickHandle)tickHandle=setInterval(updateClock,1000);}
   if(v==="goals")renderGoals();
   if(v==="lent")renderLent();
+  if(v==="bio")renderBio();
   window.scrollTo(0,0);
 }
 
