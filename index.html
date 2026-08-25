@@ -591,7 +591,7 @@ try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=t
 </script>
 
 <script>
-const APP_VERSION="v3.7";
+const APP_VERSION="v3.8";
 const USER_NAME="Isabelle";
 function greeting(){
   const h=new Date().getHours();
@@ -998,69 +998,67 @@ async function saveCardio(){saveAll();}
 async function saveGoals(){saveAll();}
 
 async function load(){
-  // 1) carrega TODOS os dados do aparelho primeiro (antes de qualquer save)
+  // 1) carrega TODOS os dados do aparelho primeiro (rápido, funciona offline)
   const lp=localGet("prop"),lg=localGet("gym"),le=localGet("ex"),lc=localGet("cardio");
   if(lp)prop=lp; if(lg)gym=lg; if(le)exState=le; if(lc)cardioState=lc;
-  // restaurar data de início da jornada se foi perdida (bug anterior). O propósito começou em 03/08/2026.
-  if(!prop.startDate){ prop.startDate="2026-08-03"; if(!prop.days)prop.days={}; }
   const lbk=localGet("books"),lco=localGet("courses");
   if(lbk)books=lbk; if(lco)courses=lco;
   const lld=localGet("lentDays"),llp=localGet("lentProps"),llg=localGet("lentGoal");
   if(lld)lentDays=lld; if(llp)lentProps=llp; if(llg!==null)lentGoal=llg;
   const lbio=localGet("bio"); if(lbio)bioExames=lbio;
+
+  // 2) BUSCA A NUVEM PRIMEIRO (antes de qualquer importação ou save) — isso protege dados quando o app é reaberto "em branco"
+  if(fbReady){
+    try{
+      const [cp,cg,ce,cc,cbk,cco,cld,clp,clg]=await Promise.all([cloudGet("prop"),cloudGet("gym"),cloudGet("ex"),cloudGet("cardio"),cloudGet("books"),cloudGet("courses"),cloudGet("lentDays"),cloudGet("lentProps"),cloudGet("lentGoal")]);
+      const cbio=await cloudGet("bio");
+      // a nuvem só sobrescreve o local se tiver conteúdo REAL (nunca deixa vazio apagar dado bom)
+      if(cp&&typeof cp==="object"&&Object.keys(cp).length>0)prop=cp;
+      if(cg&&typeof cg==="object"&&Object.keys(cg).length>0)gym=cg;
+      if(ce&&typeof ce==="object"&&Object.keys(ce).length>0)exState=ce;
+      if(cc&&typeof cc==="object"&&Object.keys(cc).length>0)cardioState=cc;
+      if(cbk&&typeof cbk==="object"&&Object.keys(cbk).length>0)books=cbk;
+      if(cco&&typeof cco==="object"&&Object.keys(cco).length>0)courses=cco;
+      if(cld&&typeof cld==="object"&&Object.keys(cld).length>0)lentDays=cld;
+      const clpVal=(clp&&clp.v!==undefined)?clp.v:clp;
+      if(Array.isArray(clpVal)&&clpVal.length>0)lentProps=clpVal;
+      const clgVal=(clg&&clg.v!==undefined)?clg.v:clg;
+      if(typeof clgVal==="string"&&clgVal.length>0)lentGoal=clgVal;
+      const cbioVal=(cbio&&cbio.v!==undefined)?cbio.v:cbio;
+      if(Array.isArray(cbioVal)&&cbioVal.length>0)bioExames=cbioVal;
+      // salva de volta no aparelho o que veio da nuvem
+      localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
+      localSet("books",books);localSet("courses",courses);
+      localSet("lentDays",lentDays);localSet("lentProps",lentProps);localSet("lentGoal",lentGoal);localSet("bio",bioExames);
+    }catch(e){console.warn("cloud load falhou",e);}
+  }
+
+  // 3) só agora garante o startDate e inicializa (com dados já vindos da nuvem)
+  if(!prop.startDate){ prop.startDate="2026-08-03"; if(!prop.days)prop.days={}; }
   initGoals();initLent();initBio();
-  // agora sim: importar histórico do MFIT (jan-jul 2026) uma única vez
+
+  // 4) importações one-shot — SÓ rodam se o dado ainda não existir (nunca apagam)
   if(!localGet("histMfitImportado_v3")){
     HISTORICO_MFIT.forEach(ds=>{ if(!gym[ds]||!gym[ds].done) gym[ds]={done:true,min:null}; });
     localSet("histMfitImportado_v3",true);
-    saveAll();
+    localSet("gym",gym); cloudSet("gym",gym);
   }
-  // restaurar compromissos do propósito (sem álcool + sem doce) de 03/08 a 17/08, uma vez só
   if(!localGet("propRestaurado_v1")){
-    const inicio=parseLocal("2026-08-03");
-    for(let i=0;i<15;i++){ // 03/08 até 17/08 = 15 dias
+    for(let i=0;i<15;i++){
       const d=parseLocal("2026-08-03");d.setDate(d.getDate()+i);const ds=dstr(d);
       if(!prop.days[ds])prop.days[ds]={};
-      prop.days[ds].alcool=true;
-      prop.days[ds].doce=true;
+      if(prop.days[ds].alcool===undefined)prop.days[ds].alcool=true;
+      if(prop.days[ds].doce===undefined)prop.days[ds].doce=true;
       if(prop.days[ds].water===undefined)prop.days[ds].water=0;
     }
     localSet("propRestaurado_v1",true);
-    saveAll();
+    localSet("prop",prop); cloudSet("prop",prop);
   }
   calMonth=new Date().getMonth();
   const vb=document.getElementById("verBadge");if(vb)vb.textContent=APP_VERSION;
   const ht=document.getElementById("hTitle");if(ht)ht.textContent=greeting();
   buildWorkoutSelector();
   renderStart();renderWorkout();renderFreq();
-  // 2) busca da nuvem e atualiza se houver
-  if(fbReady){
-    try{
-      const [cp,cg,ce,cc,cbk,cco,cld,clp,clg]=await Promise.all([cloudGet("prop"),cloudGet("gym"),cloudGet("ex"),cloudGet("cardio"),cloudGet("books"),cloudGet("courses"),cloudGet("lentDays"),cloudGet("lentProps"),cloudGet("lentGoal")]);
-      const cbio=await cloudGet("bio");
-      let changed=false;
-      if(cp){prop=cp;changed=true;} if(cg){gym=cg;changed=true;}
-      if(ce){exState=ce;changed=true;} if(cc){cardioState=cc;changed=true;}
-      if(cbk){books=cbk;changed=true;} if(cco){courses=cco;changed=true;}
-      if(cld){lentDays=cld;changed=true;}
-      // sacrifícios e objetivo: desempacota {v:...} e NUNCA deixa vazio da nuvem apagar dado local bom
-      const clpVal=(clp&&clp.v!==undefined)?clp.v:clp;
-      if(Array.isArray(clpVal)&&clpVal.length>0){lentProps=clpVal;changed=true;}
-      else if((!lentProps||lentProps.length===0)&&Array.isArray(clpVal)){lentProps=clpVal;}
-      const clgVal=(clg&&clg.v!==undefined)?clg.v:clg;
-      if(typeof clgVal==="string"&&clgVal.length>0){lentGoal=clgVal;changed=true;}
-      const cbioVal=(cbio&&cbio.v!==undefined)?cbio.v:cbio;
-      if(Array.isArray(cbioVal)&&cbioVal.length>0){bioExames=cbioVal;changed=true;}
-      if(changed){
-        // salva de volta no aparelho e re-renderiza
-        localSet("prop",prop);localSet("gym",gym);localSet("ex",exState);localSet("cardio",cardioState);
-        localSet("books",books);localSet("courses",courses);
-        localSet("lentDays",lentDays);localSet("lentProps",lentProps);localSet("lentGoal",lentGoal);
-        localSet("bio",bioExames);
-        renderStart();renderWorkout();renderFreq();
-      }
-    }catch(e){console.warn("cloud load falhou",e);}
-  }
 }
 
 function currentDayIndex(){if(!prop.startDate)return 0;const n=daysBetween(prop.startDate,todayStr())+1;return Math.max(0,Math.min(TOTAL,n));}
