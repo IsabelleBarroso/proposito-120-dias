@@ -332,7 +332,7 @@
 <body>
 
 <header>
-  <div class="kicker">Propósito · 120 dias <span class="ver-inline" id="verBadge">v0.0</span></div>
+  <div class="kicker">Propósito · 120 dias <span class="ver-inline" id="verBadge">v5.1</span></div>
   <h1 id="hTitle">Início</h1>
 </header>
 
@@ -612,7 +612,7 @@ try{ firebase.initializeApp(firebaseConfig); fbDB=firebase.database(); fbReady=t
 </script>
 
 <script>
-const APP_VERSION="v5.0";
+const APP_VERSION="v5.1";
 const BIO_NOVO_2109={"data": "21/09/2026", "peso": 86.5, "mme": 27.1, "gord": 37.5, "pgc": 43.4, "imc": 33.4, "pts": 64, "af": 5.8, "agua": 36.0, "prot": 9.6, "min": 3.39, "tmb": 1428, "visc": 16, "rcq": 0.85, "iso": "2026-09-21"};
 let cloudLoadOk=false;
 const USER_NAME="Isabelle";
@@ -1698,7 +1698,6 @@ document.getElementById("navGoals").addEventListener("click",()=>switchView("goa
  document.getElementById("navNight").addEventListener("click",()=>switchView("night"));
  document.getElementById("nAddIntent").addEventListener("click",addNightIntent);
  document.getElementById("nReset").addEventListener("click",resetNight);
- document.getElementById("qAddProp").addEventListener("click",addLentProp);
  document.getElementById("navMore").addEventListener("click",()=>document.getElementById("moreMenu").classList.remove("hidden"));
  document.getElementById("moreClose").addEventListener("click",()=>document.getElementById("moreMenu").classList.add("hidden"));
  document.getElementById("moreMenu").addEventListener("click",e=>{if(e.target.id==="moreMenu")document.getElementById("moreMenu").classList.add("hidden");});
@@ -1707,7 +1706,6 @@ document.getElementById("navGoals").addEventListener("click",()=>switchView("goa
  document.getElementById("bfSave").addEventListener("click",saveBioExam);
  document.getElementById("bfCancel").addEventListener("click",closeBioModal);
  document.getElementById("bioModal").addEventListener("click",e=>{if(e.target.id==="bioModal")closeBioModal();});
- document.getElementById("qGoalEdit").addEventListener("click",editLentGoal);
 document.getElementById("addBook").addEventListener("click",()=>addGoalItem("book"));
 document.getElementById("addCourse").addEventListener("click",()=>addGoalItem("course"));
 function initGoals(){
